@@ -13,7 +13,7 @@
           <div class="title transition">
             <div>text1</div>
             <div>
-              <img class="profile" src="../assets/images/profile.jpg" />
+              <img class="profile" src="" />
             </div>
             <vue-typer v-if="getTyped" class="typer" :text="titles"></vue-typer>
           </div>

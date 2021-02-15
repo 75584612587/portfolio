@@ -2,7 +2,7 @@
   "name": "profile",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "Todd Kao <todd.kakao@gmail.com>",
+  "author": "text",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
