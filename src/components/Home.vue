@@ -9,22 +9,35 @@
           :repeat="0"
           @completed="doneTyping"
         ></vue-typer>
+
         <div v-show="getTyped">
           <div class="title transition">
-            <div>text1</div>
+            <div align="center">
+            <iframe
+              align="center"
+              src="//widget.calendarlabs.com/v1/quot.php?cid=101&ver=1.2&uid=6374069494&c=random&l=en&cbg=000000&cb=2&cbc=FFFFFF&cf=calibri&cfg=FFFFFF&qfs=bi&qta=right&tfg=FFFFFF&tfs=bi&afc=FFFFFF&afs=i"
+              width="188"
+              height="210"
+              marginwidth="0"
+              marginheight="0"
+              frameborder="0"
+              scrolling="no"
+              allowtransparency="true"
+              >Loading...</iframe
+            >
+
+          </div>
             <div>
               <img class="profile" src="" />
             </div>
             <vue-typer v-if="getTyped" class="typer" :text="titles"></vue-typer>
           </div>
+          <router-link to="/test">Test Page
+          </router-link>
+        
           <p class="transition">
             text2
-            <a
-              href="text2"
-              class="bold"
-              target="_blank"
-              >asdf</a
-            >. text3
+            <a href="text2" class="bold" target="_blank">asdf</a>. text3
             <span class="bold">text</span> text
             <span
               v-for="(technology, index) in technologies"
@@ -36,9 +49,7 @@
               ><template v-else>.</template>
             </span>
           </p>
-          <p>
-            text
-          </p>
+          <p>text</p>
           <div class="flex-center social">
             <a href="text" target="_blank"
               ><i class="fa fa-github fa-3x hover" aria-hidden="true"
@@ -56,12 +67,10 @@
         </div>
       </div>
     </div>
-    <canvas class="bg" />
   </div>
 </template>
 
 <script>
-import Particles from "particlesjs";
 import anime from "animejs";
 import { VueTyper } from "vue-typer";
 import { mapGetters, mapActions } from "vuex";
@@ -70,15 +79,14 @@ import $ from "jquery";
 export default {
   name: "Home",
   components: {
-    VueTyper
+    VueTyper,
   },
   mounted() {
-    this.initBg();
     this.init();
   },
   data: () => ({
     typed: [`text1`, `text2`],
-    titles: ["Frontend Engineer", "Software Developer", "Lifelong Learner"],
+    titles: ["Python basic course", "Table of contents"],
     technologies: [
       "React",
       "Typescript",
@@ -86,11 +94,11 @@ export default {
       "Jest",
       "Cypress",
       "styled-components (CSS-in-js)",
-      "Storybook (Reusable UI components)"
-    ]
+      "Storybook (Reusable UI components)",
+    ],
   }),
   computed: {
-    ...mapGetters(["getTyped"])
+    ...mapGetters(["getTyped"]),
   },
   methods: {
     ...mapActions(["setTyped", "clearTyped"]),
@@ -102,33 +110,7 @@ export default {
         $(".main-card").css({ "max-height": "65px" });
       }
     },
-    initBg() {
-      Particles.init({
-        selector: ".bg",
-        color: ["#1abc9c", "#404B69", "#6c5ce7"],
-        maxParticles: 50,
-        connectParticles: true,
-        move: {
-          speed: 3
-        },
-        responsive: [
-          {
-            breakpoint: 768,
-            options: {
-              maxParticles: 0,
-              color: ["#1abc9c", "#404B69", "#6c5ce7"],
-              connectParticles: false
-            }
-          }
-        ]
-      });
-      anime({
-        targets: ".bg",
-        opacity: 1,
-        easing: "easeOutQuint",
-        duration: 5000
-      });
-    },
+
     doneTyping() {
       setTimeout(() => {
         this.setTyped(true);
@@ -137,12 +119,12 @@ export default {
           targets: ".transition",
           opacity: 1,
           easing: "easeOutQuint",
-          duration: 3000
+          duration: 3000,
         });
       }, 1000);
       console.log("test");
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -170,7 +152,6 @@ export default {
   }
 }
 body {
-  overflow: hidden;
   position: relative;
   height: 100vh;
 }
@@ -227,7 +208,6 @@ body {
 }
 html,
 body {
-  overflow: hidden;
   font-family: "Open Sans", sans-serif;
   margin: 0;
   padding: 0;
@@ -239,16 +219,7 @@ body {
 .el-card img {
   width: 100%;
 }
-.bg {
-  background-color: #2c3e50;
-  position: absolute;
-  display: block;
-  top: 0;
-  left: 0;
-  height: 100vh !important;
-  z-index: -1;
-  opacity: 0;
-}
+
 
 .main-card {
   border-radius: 4px;
@@ -261,10 +232,11 @@ body {
   align-items: center;
   padding: 20px;
   max-width: 100%;
-  width: 500px;
+  width: 1000px;
   flex-direction: column;
   opacity: 0.8;
   box-sizing: border-box;
+  height: 100%;
 }
 
 @media screen and (max-width: 768px) {
@@ -275,12 +247,14 @@ body {
 }
 
 .content {
-  height: 100%;
 }
 .body {
-  height: 100vh;
+  background-color: #2c3e50;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 50px;
+  box-sizing: border-box;
+  height: 100vh;
 }
 </style>
