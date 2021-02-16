@@ -255,6 +255,6 @@ body {
   align-items: center;
   padding: 50px;
   box-sizing: border-box;
-  height: 100vh;
+  min-height: 100vh;
 }
 </style>
