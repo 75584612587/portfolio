@@ -10,11 +10,7 @@
   
             <vue-typer v-if="getTyped" class="typer" :text="titles"></vue-typer>
           </div>
-          <router-link to="/maxint">Get the maximum integer in a list
-          </router-link>
-          <br>
-          <router-link to="/modenum">Get the mode in a list of integers
-          </router-link>
+          <iframe src="https://trinket.io/embed/python/62e8a68d7d" width="100%" height="356" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen></iframe>
           <router-link to="/">Home page
           </router-link>
           <p class="transition">
