@@ -49,7 +49,17 @@
               ><template v-else>.</template>
             </span>
           </p>
-          <p>text</p>
+
+          <button @click="toggleShowMessage">{{showMessage?"hide":"show"}} message</button>
+          <p v-if="showMessage"> {{ message }} </p>
+          <p v-else>message is hidden</p>
+
+          <div class="image-container">
+            <img :key="dog" v-for="dog in dogs" :src="dog" height="400" width="50%"/>
+          </div>
+          <div>enter a number to multiple by 2</div>
+          <input v-model="input">
+          {{ input * 2}}
           <div class="flex-center social">
             <a href="text" target="_blank"
               ><i class="fa fa-github fa-3x hover" aria-hidden="true"
@@ -75,6 +85,10 @@ import anime from "animejs";
 import { VueTyper } from "vue-typer";
 import { mapGetters, mapActions } from "vuex";
 import $ from "jquery";
+import image1 from "../../static/images/doggo1.jpg";
+import image2 from "../../static/images/doggo2.jpg";
+import image3 from "../../static/images/doggo3.jpg";
+import image4 from "../../static/images/doggo4.jpg";
 
 export default {
   name: "Home",
@@ -85,6 +99,10 @@ export default {
     this.init();
   },
   data: () => ({
+    input: 0,
+    dogs: [image1, image2, image3, image4],
+    showMessage: false,
+    message: 'This is my message',
     typed: [`text1`, `text2`],
     titles: ["Python basic course", "Table of contents"],
     technologies: [
@@ -109,6 +127,9 @@ export default {
       if (this.getTyped === false) {
         $(".main-card").css({ "max-height": "65px" });
       }
+    },
+    toggleShowMessage() {
+      this.showMessage = !this.showMessage
     },
 
     doneTyping() {
@@ -256,5 +277,10 @@ body {
   padding: 50px;
   box-sizing: border-box;
   min-height: 100vh;
+}
+
+.image-container {
+  display:flex;
+  flex-wrap: wrap;
 }
 </style>
