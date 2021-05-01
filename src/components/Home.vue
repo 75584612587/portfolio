@@ -2,79 +2,14 @@
   <div class="body">
     <div v-cloak class="content">
       <div class="main-card">
-        <vue-typer
-          v-if="!getTyped"
-          class="typer"
-          :text="typed"
-          :repeat="0"
-          @completed="doneTyping"
-        ></vue-typer>
-
-        <div v-show="getTyped">
-          <div class="title transition">
-            <div align="center">
-            <iframe
-              align="center"
-              src="//widget.calendarlabs.com/v1/quot.php?cid=101&ver=1.2&uid=6374069494&c=random&l=en&cbg=000000&cb=2&cbc=FFFFFF&cf=calibri&cfg=FFFFFF&qfs=bi&qta=right&tfg=FFFFFF&tfs=bi&afc=FFFFFF&afs=i"
-              width="188"
-              height="210"
-              marginwidth="0"
-              marginheight="0"
-              frameborder="0"
-              scrolling="no"
-              allowtransparency="true"
-              >Loading...</iframe
-            >
-
-          </div>
-            <div>
-              <img class="profile" src="" />
-            </div>
-            <vue-typer v-if="getTyped" class="typer" :text="titles"></vue-typer>
-          </div>
-          <router-link to="/test">Test Page
-          </router-link>
-        
-          <p class="transition">
-            text2
-            <a href="text2" class="bold" target="_blank">asdf</a>. text3
-            <span class="bold">text</span> text
-            <span
-              v-for="(technology, index) in technologies"
-              :key="technology"
-              class="bold"
-            >
-              {{ technology
-              }}<template v-if="index < technologies.length - 1">,</template
-              ><template v-else>.</template>
-            </span>
-          </p>
-
-          <button @click="toggleShowMessage">{{showMessage?"hide":"show"}} message</button>
-          <p v-if="showMessage"> {{ message }} </p>
-          <p v-else>message is hidden</p>
-
-          <div class="image-container">
-            <img :key="dog" v-for="dog in dogs" :src="dog" height="400" width="50%"/>
-          </div>
-          <div>enter a number to multiple by 2</div>
-          <input v-model="input">
-          {{ input * 2}}
-          <div class="flex-center social">
-            <a href="text" target="_blank"
-              ><i class="fa fa-github fa-3x hover" aria-hidden="true"
-            /></a>
-            <a href="text" target="_blank"
-              ><i class="fa fa-linkedin-square fa-3x hover" aria-hidden="true"
-            /></a>
-          </div>
-          <div>
-            <div class="small">
-              text
-              <a @click.stop.prevent="init(true)" href="">click here </a>text
-            </div>
-          </div>
-        </div>
+        <button @click="toggleShowMessage">
+          {{ showMessage ? "hide" : "show" }} message
+        </button>
+        <p v-if="showMessage">{{ message }}</p>
+        <p v-else>message is hidden</p>
+        <ImageComponent :images="this.dogs" />
+        <ImageComponent :images="this.cats" />
+        <ReverseMessage />
       </div>
     </div>
   </div>
@@ -89,11 +24,17 @@ import image1 from "../../static/images/doggo1.jpg";
 import image2 from "../../static/images/doggo2.jpg";
 import image3 from "../../static/images/doggo3.jpg";
 import image4 from "../../static/images/doggo4.jpg";
+import image5 from "../../static/images/cat1.jpg";
+import image6 from "../../static/images/cat2.jpg";
+import ImageComponent from "./ImageComponent";
+import ReverseMessage from "./ReverseMessage";
 
 export default {
   name: "Home",
   components: {
     VueTyper,
+    ImageComponent,
+    ReverseMessage,
   },
   mounted() {
     this.init();
@@ -101,8 +42,9 @@ export default {
   data: () => ({
     input: 0,
     dogs: [image1, image2, image3, image4],
+    cats: [image5, image6],
     showMessage: false,
-    message: 'This is my message',
+    message: "This is my message",
     typed: [`text1`, `text2`],
     titles: ["Python basic course", "Table of contents"],
     technologies: [
@@ -129,7 +71,7 @@ export default {
       }
     },
     toggleShowMessage() {
-      this.showMessage = !this.showMessage
+      this.showMessage = !this.showMessage;
     },
 
     doneTyping() {
@@ -241,7 +183,6 @@ body {
   width: 100%;
 }
 
-
 .main-card {
   border-radius: 4px;
   border: 1px solid #e6ebf5;
@@ -277,10 +218,5 @@ body {
   padding: 50px;
   box-sizing: border-box;
   min-height: 100vh;
-}
-
-.image-container {
-  display:flex;
-  flex-wrap: wrap;
 }
 </style>
