@@ -10,6 +10,7 @@
         <ImageComponent :images="this.dogs" />
         <ImageComponent :images="this.cats" />
         <ReverseMessage />
+        <ProductTile :products="this.products" />
       </div>
     </div>
   </div>
@@ -26,8 +27,20 @@ import image3 from "../../static/images/doggo3.jpg";
 import image4 from "../../static/images/doggo4.jpg";
 import image5 from "../../static/images/cat1.jpg";
 import image6 from "../../static/images/cat2.jpg";
+import product1 from "../../static/images/petFood1.jpeg";
+import product2 from "../../static/images/petFood2.jpeg";
+import product3 from "../../static/images/petFood3.jpeg";
+import product4 from "../../static/images/petFood4.jpeg";
+import product5 from "../../static/images/petFood5.jpeg";
+import product6 from "../../static/images/petFood6.jpeg";
+import product7 from "../../static/images/petFood7.jpeg";
+import product8 from "../../static/images/petFood8.png";
+import product9 from "../../static/images/petFood9.png";
+import product10 from "../../static/images/petFood10.png";
+
 import ImageComponent from "./ImageComponent";
 import ReverseMessage from "./ReverseMessage";
+import ProductTile from "./ProductTile";
 
 export default {
   name: "Home",
@@ -35,6 +48,7 @@ export default {
     VueTyper,
     ImageComponent,
     ReverseMessage,
+    ProductTile,
   },
   mounted() {
     this.init();
@@ -45,6 +59,68 @@ export default {
     cats: [image5, image6],
     showMessage: false,
     message: "This is my message",
+    products: [
+      {
+        image: product1,
+        name: "IAMS PROACTIVE HEALTH Adult Indoor Weight Control & Hairball Control Dry Cat Food with Chicken, Turkey, and Garden Greens, 22 lb. Bag",
+        price: 29.97,
+        freeShipping: true,
+      },
+      {
+        image: product2,
+        name: "(24 Pack) CESAR Wet Dog Food Classic Loaf in Sauce Poultry Variety Pack, 3.5 oz. Easy Peel Trays with Real Chicken, Turkey or Duck",
+        price: 19.47,
+        freeShipping: true,
+      },
+      {
+        image: product3,
+        name: "PEDIGREE Complete Nutrition Adult Dry Dog Food Grilled Steak & Vegetable Flavor, 46.8 lb. Bag",
+        price: 25.83,
+        freeShipping: false,
+      },
+      {
+        image: product4,
+        name: "Vitakraft Menu Care Complex Vitamin Fortified Pet Rabbit Food, 4 lbs.",
+        price: 5.86,
+        freeShipping: true,
+      },
+      {
+        image: product5,
+        name: "(40 Pack) Friskies Gravy Wet Cat Food Variety Pack, TurChicken Extra Gravy Chunky, Meaty Bits & Shreds, 5.5 oz. Cans",
+        price: 20.48,
+        freeShipping: true,
+      },
+      {
+        image: product6,
+        name: "Purina Cat Chow High Protein Dry Cat Food, Complete, 20 lb. Bag",
+        price: 18.78,
+        freeShipping: true,
+      },
+      {
+        image: product7,
+        name: "Meow Mix Original Choice Dry Cat Food, 30 Pounds",
+        price: 19.94,
+        freeShipping: false,
+      },
+      {
+        image: product8,
+        name: "Purina Kit & Kaboodle Dry Cat Food, Original, 30 lb. Bag",
+        price: 17.98,
+        freeShipping: true,
+      },
+      {
+        image: product9,
+        name: "(6 Pack) Purina ONE Natural, High Protein Gravy Wet Dog Food Variety Pack, SmartBlend Tender Cuts in Gravy, 13 oz. Cans",
+        price: 8.42,
+        freeShipping: true,
+      },
+      {
+        image: product10,
+        name: "(8 Pack) Friskies Natural, Grain Free Wet Cat Food Complement, Lil' Soups With Tuna in Chicken Broth, 1.2 oz. Cups",
+        price: 0.94,
+        freeShipping: false
+      },
+    ],
     typed: [`text1`, `text2`],
     titles: ["Python basic course", "Table of contents"],
     technologies: [
@@ -194,7 +270,7 @@ body {
   align-items: center;
   padding: 20px;
   max-width: 100%;
-  width: 1000px;
+  width: 1700px;
   flex-direction: column;
   opacity: 0.8;
   box-sizing: border-box;
@@ -208,8 +284,6 @@ body {
   }
 }
 
-.content {
-}
 .body {
   background-color: #2c3e50;
   display: flex;
