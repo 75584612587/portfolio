@@ -2,16 +2,11 @@
   <div class="body">
     <div v-cloak class="content">
       <div class="main-card">
-        <button @click="toggleShowMessage">
-          {{ showMessage ? "hide" : "show" }} message
-        </button>
-        <p v-if="showMessage">{{ message }}</p>
-        <p v-else>message is hidden</p>
-        <ImageComponent :images="this.dogs" />
-        <ImageComponent :images="this.cats" />
-        <ReverseMessage />
-        <router-link to="/">Go to Home</router-link>
-
+        <div>
+            {{ this.$route.params.productName }}
+            {{ this.productDetails.productName }}
+            <router-link to="/">Go to Home</router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -22,34 +17,26 @@ import anime from "animejs";
 import { VueTyper } from "vue-typer";
 import { mapGetters, mapActions } from "vuex";
 import $ from "jquery";
-import image1 from "../../static/images/doggo1.jpg";
-import image2 from "../../static/images/doggo2.jpg";
-import image3 from "../../static/images/doggo3.jpg";
-import image4 from "../../static/images/doggo4.jpg";
-import image5 from "../../static/images/cat1.jpg";
-import image6 from "../../static/images/cat2.jpg";
-
-import ImageComponent from "./ImageComponent";
-import ReverseMessage from "./ReverseMessage";
-import ProductTile from "./ProductTile";
 
 export default {
   name: "Home",
   components: {
     VueTyper,
-    ImageComponent,
-    ReverseMessage,
-    ProductTile,
+
+  },
+  props: {
+    product: Object,
   },
   mounted() {
     this.init();
+    console.log(this.product);
+    console.log(this.$route.params);
+    this.productDetails = this.$route.params;
   },
   data: () => ({
+    productDetails: undefined,
     input: 0,
-    dogs: [image1, image2, image3, image4],
-    cats: [image5, image6],
     showMessage: false,
-    message: "This is my message",
     typed: [`text1`, `text2`],
     titles: ["Python basic course", "Table of contents"],
     technologies: [

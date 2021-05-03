@@ -2,15 +2,11 @@
   <div class="body">
     <div v-cloak class="content">
       <div class="main-card">
-        <button @click="toggleShowMessage">
-          {{ showMessage ? "hide" : "show" }} message
-        </button>
-        <p v-if="showMessage">{{ message }}</p>
-        <p v-else>message is hidden</p>
-        <ImageComponent :images="this.dogs" />
-        <ImageComponent :images="this.cats" />
-        <ReverseMessage />
-        <ProductTile :products="this.products" />
+        <div>
+          <ProductTile :products="this.products" />
+          <router-link to="/test">Go to animals</router-link>
+          <router-link to="/ProductDetails">Go to description</router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -21,12 +17,7 @@ import anime from "animejs";
 import { VueTyper } from "vue-typer";
 import { mapGetters, mapActions } from "vuex";
 import $ from "jquery";
-import image1 from "../../static/images/doggo1.jpg";
-import image2 from "../../static/images/doggo2.jpg";
-import image3 from "../../static/images/doggo3.jpg";
-import image4 from "../../static/images/doggo4.jpg";
-import image5 from "../../static/images/cat1.jpg";
-import image6 from "../../static/images/cat2.jpg";
+
 import product1 from "../../static/images/petFood1.jpeg";
 import product2 from "../../static/images/petFood2.jpeg";
 import product3 from "../../static/images/petFood3.jpeg";
@@ -37,17 +28,13 @@ import product7 from "../../static/images/petFood7.jpeg";
 import product8 from "../../static/images/petFood8.png";
 import product9 from "../../static/images/petFood9.png";
 import product10 from "../../static/images/petFood10.png";
-
-import ImageComponent from "./ImageComponent";
-import ReverseMessage from "./ReverseMessage";
 import ProductTile from "./ProductTile";
 
 export default {
   name: "Home",
   components: {
     VueTyper,
-    ImageComponent,
-    ReverseMessage,
+
     ProductTile,
   },
   mounted() {
@@ -55,10 +42,6 @@ export default {
   },
   data: () => ({
     input: 0,
-    dogs: [image1, image2, image3, image4],
-    cats: [image5, image6],
-    showMessage: false,
-    message: "This is my message",
     products: [
       {
         image: product1,
