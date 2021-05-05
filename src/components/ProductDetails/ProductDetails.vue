@@ -2,85 +2,64 @@
   <div class="body">
     <div v-cloak class="content">
       <div class="main-card">
-        <div>
-            {{ this.$route.params.productName }}
-            {{ this.productDetails.productName }}
-            <router-link to="/">Go to Home</router-link>
+        <div class="card-left">
+          <div class="multi-images">
+            <div :key="index" v-for="(image, index) in state.multiImages">
+              <img :src="image" width="100%" height="100%" />
+            </div>
+          </div>
+          <img
+            :src="productDetails.productImage"
+            class="product-image"
+            width="82%"
+            height="auto"
+          />
+        </div>
+        <div class="card-right">
+          <div>
+            {{ productDetails.productName }}
+          </div>
+          <div class="price">
+            {{ state.quantities[state.picked].value * state.selectedQuantity }}
+          </div>
+          <div class="quantity-size">
+            <div :key="quantity.size" v-for="(quantity, index) in state.quantities">
+              <input type="radio" id="one" :value="index" v-model="state.picked" />
+              <label for="one"> {{ quantity.size }} </label>
+            </div>
+          </div>
+          <div class="add-cart">
+            <select v-model="state.selectedQuantity">
+              <option
+                :key="option"
+                v-for="option in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
+                :value="option"
+              >
+                {{ option }}
+              </option>
+            </select>
+            <button class="add-cart-button">add to cart</button>
+          </div>
+          <router-link to="/">Go to Home</router-link>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-import anime from "animejs";
-import { VueTyper } from "vue-typer";
-import { mapGetters, mapActions } from "vuex";
-import $ from "jquery";
+<script lang="ts">
+import Vue from "vue";
+import Component from "vue-class-component";
+import ViewState from "./viewState";
+import { Observer } from "mobx-vue";
 
-export default {
-  name: "Home",
-  components: {
-    VueTyper,
+@Observer
+@Component
+export default class App extends Vue {
+  state = new ViewState();
 
-  },
-  props: {
-    product: Object,
-  },
-  mounted() {
-    this.init();
-    console.log(this.product);
-    console.log(this.$route.params);
-    this.productDetails = this.$route.params;
-  },
-  data: () => ({
-    productDetails: undefined,
-    input: 0,
-    showMessage: false,
-    typed: [`text1`, `text2`],
-    titles: ["Python basic course", "Table of contents"],
-    technologies: [
-      "React",
-      "Typescript",
-      "MobX",
-      "Jest",
-      "Cypress",
-      "styled-components (CSS-in-js)",
-      "Storybook (Reusable UI components)",
-    ],
-  }),
-  computed: {
-    ...mapGetters(["getTyped"]),
-  },
-  methods: {
-    ...mapActions(["setTyped", "clearTyped"]),
-    init(reset = false) {
-      if (reset === true) {
-        this.clearTyped();
-      }
-      if (this.getTyped === false) {
-        $(".main-card").css({ "max-height": "65px" });
-      }
-    },
-    toggleShowMessage() {
-      this.showMessage = !this.showMessage;
-    },
-
-    doneTyping() {
-      setTimeout(() => {
-        this.setTyped(true);
-        $(".main-card").addClass("autoHeight");
-        anime({
-          targets: ".transition",
-          opacity: 1,
-          easing: "easeOutQuint",
-          duration: 3000,
-        });
-      }, 1000);
-      console.log("test");
-    },
-  },
-};
+  productDetails = (this.$route as any).params;
+}
 </script>
 
 <style>
@@ -191,6 +170,8 @@ body {
   opacity: 0.8;
   box-sizing: border-box;
   height: 100%;
+  display: flex;
+  flex-direction: row;
 }
 
 @media screen and (max-width: 768px) {
@@ -208,5 +189,29 @@ body {
   padding: 50px;
   box-sizing: border-box;
   min-height: 100vh;
+}
+.card-left {
+  width: 50%;
+  display: flex;
+}
+.card-right {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+.multi-images {
+  display: flex;
+  width: "18%";
+  flex-direction: column;
+}
+.quantity-value {
+  display: flex;
+}
+
+.quantity-size {
+  display: flex;
+}
+.add-cart {
+  display: flex;
 }
 </style>

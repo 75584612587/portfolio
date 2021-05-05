@@ -49,19 +49,9 @@
 </template>
 
 <script>
-import anime from "animejs";
-import { VueTyper } from "vue-typer";
-import { mapGetters, mapActions } from "vuex";
-import $ from "jquery";
 
 export default {
   name: "Test",
-  components: {
-    VueTyper,
-  },
-  mounted() {
-    this.init();
-  },
   data: () => ({
     typed: [`text1`, `text2`],
     titles: ["Python basic course", "Table of contents"],
@@ -75,34 +65,6 @@ export default {
       "Storybook (Reusable UI components)",
     ],
   }),
-  computed: {
-    ...mapGetters(["getTyped"]),
-  },
-  methods: {
-    ...mapActions(["setTyped", "clearTyped"]),
-    init(reset = false) {
-      if (reset === true) {
-        this.clearTyped();
-      }
-      if (this.getTyped === false) {
-        $(".main-card").css({ "max-height": "65px" });
-      }
-    },
-
-    doneTyping() {
-      setTimeout(() => {
-        this.setTyped(true);
-        $(".main-card").addClass("autoHeight");
-        anime({
-          targets: ".transition",
-          opacity: 1,
-          easing: "easeOutQuint",
-          duration: 3000,
-        });
-      }, 1000);
-      console.log("test");
-    },
-  },
 };
 </script>
 

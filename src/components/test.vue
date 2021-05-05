@@ -18,31 +18,21 @@
 </template>
 
 <script>
-import anime from "animejs";
-import { VueTyper } from "vue-typer";
-import { mapGetters, mapActions } from "vuex";
-import $ from "jquery";
-import image1 from "../../static/images/doggo1.jpg";
-import image2 from "../../static/images/doggo2.jpg";
-import image3 from "../../static/images/doggo3.jpg";
-import image4 from "../../static/images/doggo4.jpg";
-import image5 from "../../static/images/cat1.jpg";
-import image6 from "../../static/images/cat2.jpg";
+import image1 from "@/assets/images/doggo1.jpg";
+import image2 from "@/assets/images/doggo2.jpg";
+import image3 from "@/assets/images/doggo3.jpg";
+import image4 from "@/assets/images/doggo4.jpg";
+import image5 from "@/assets/images/cat1.jpg";
+import image6 from "@/assets/images/cat2.jpg";
 
 import ImageComponent from "./ImageComponent";
-import ReverseMessage from "./ReverseMessage";
-import ProductTile from "./ProductTile";
+import ReverseMessage from "./ReverseMessage/ReverseMessage";
 
 export default {
   name: "Home",
   components: {
-    VueTyper,
     ImageComponent,
     ReverseMessage,
-    ProductTile,
-  },
-  mounted() {
-    this.init();
   },
   data: () => ({
     input: 0,
@@ -50,47 +40,10 @@ export default {
     cats: [image5, image6],
     showMessage: false,
     message: "This is my message",
-    typed: [`text1`, `text2`],
-    titles: ["Python basic course", "Table of contents"],
-    technologies: [
-      "React",
-      "Typescript",
-      "MobX",
-      "Jest",
-      "Cypress",
-      "styled-components (CSS-in-js)",
-      "Storybook (Reusable UI components)",
-    ],
   }),
-  computed: {
-    ...mapGetters(["getTyped"]),
-  },
   methods: {
-    ...mapActions(["setTyped", "clearTyped"]),
-    init(reset = false) {
-      if (reset === true) {
-        this.clearTyped();
-      }
-      if (this.getTyped === false) {
-        $(".main-card").css({ "max-height": "65px" });
-      }
-    },
     toggleShowMessage() {
       this.showMessage = !this.showMessage;
-    },
-
-    doneTyping() {
-      setTimeout(() => {
-        this.setTyped(true);
-        $(".main-card").addClass("autoHeight");
-        anime({
-          targets: ".transition",
-          opacity: 1,
-          easing: "easeOutQuint",
-          duration: 3000,
-        });
-      }, 1000);
-      console.log("test");
     },
   },
 };

@@ -13,35 +13,27 @@
 </template>
 
 <script>
-import anime from "animejs";
-import { VueTyper } from "vue-typer";
-import { mapGetters, mapActions } from "vuex";
-import $ from "jquery";
 
-import product1 from "../../static/images/petFood1.jpeg";
-import product2 from "../../static/images/petFood2.jpeg";
-import product3 from "../../static/images/petFood3.jpeg";
-import product4 from "../../static/images/petFood4.jpeg";
-import product5 from "../../static/images/petFood5.jpeg";
-import product6 from "../../static/images/petFood6.jpeg";
-import product7 from "../../static/images/petFood7.jpeg";
-import product8 from "../../static/images/petFood8.png";
-import product9 from "../../static/images/petFood9.png";
-import product10 from "../../static/images/petFood10.png";
+import product1 from "@/assets/images/petFood1.jpeg";
+import product2 from "@/assets/images/petFood2.jpeg";
+import product3 from "@/assets/images/petFood3.jpeg";
+import product4 from "@/assets/images/petFood4.jpeg";
+import product5 from "@/assets/images/petFood5.jpeg";
+import product6 from "@/assets/images/petFood6.jpeg";
+import product7 from "@/assets/images/petFood7.jpeg";
+import product8 from "@/assets/images/petFood8.png";
+import product9 from "@/assets/images/petFood9.png";
+import product10 from "@/assets/images/petFood10.png";
 import ProductTile from "./ProductTile";
 
 export default {
   name: "Home",
   components: {
-    VueTyper,
-
     ProductTile,
-  },
-  mounted() {
-    this.init();
   },
   data: () => ({
     input: 0,
+
     products: [
       {
         image: product1,
@@ -104,48 +96,12 @@ export default {
         freeShipping: false
       },
     ],
-    typed: [`text1`, `text2`],
-    titles: ["Python basic course", "Table of contents"],
-    technologies: [
-      "React",
-      "Typescript",
-      "MobX",
-      "Jest",
-      "Cypress",
-      "styled-components (CSS-in-js)",
-      "Storybook (Reusable UI components)",
-    ],
   }),
-  computed: {
-    ...mapGetters(["getTyped"]),
-  },
   methods: {
-    ...mapActions(["setTyped", "clearTyped"]),
-    init(reset = false) {
-      if (reset === true) {
-        this.clearTyped();
-      }
-      if (this.getTyped === false) {
-        $(".main-card").css({ "max-height": "65px" });
-      }
-    },
     toggleShowMessage() {
       this.showMessage = !this.showMessage;
     },
 
-    doneTyping() {
-      setTimeout(() => {
-        this.setTyped(true);
-        $(".main-card").addClass("autoHeight");
-        anime({
-          targets: ".transition",
-          opacity: 1,
-          easing: "easeOutQuint",
-          duration: 3000,
-        });
-      }, 1000);
-      console.log("test");
-    },
   },
 };
 </script>
