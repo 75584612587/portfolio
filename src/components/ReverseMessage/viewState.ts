@@ -1,5 +1,5 @@
-import { action, computed, observable } from "mobx";
-export default class ViewModel {
+import { observable } from "mobx";
+export class ReverseMessageState {
     @observable
     input = "";
 

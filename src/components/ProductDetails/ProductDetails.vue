@@ -1,48 +1,87 @@
 <template>
   <div class="body">
     <div v-cloak class="content">
-      <div class="main-card">
-        <div class="card-left">
-          <div class="multi-images">
-            <div :key="index" v-for="(image, index) in state.multiImages">
-              <img :src="image" width="100%" height="100%" />
+      <Body>
+        <CardContainer>
+          <CardLeft>
+            <MultiImages>
+              <div :key="index" v-for="(image, index) in state.multiImages">
+                <img :src="image" width="110" height="auto" />
+              </div>
+            </MultiImages>
+            <div>
+              <img
+                :src="productDetails.image"
+                class="product-image"
+                width="100%"
+                height="auto"
+              />
             </div>
-          </div>
-          <img
-            :src="productDetails.productImage"
-            class="product-image"
-            width="82%"
-            height="auto"
-          />
-        </div>
-        <div class="card-right">
-          <div>
-            {{ productDetails.productName }}
-          </div>
-          <div class="price">
-            {{ state.quantities[state.picked].value * state.selectedQuantity }}
-          </div>
-          <div class="quantity-size">
-            <div :key="quantity.size" v-for="(quantity, index) in state.quantities">
-              <input type="radio" id="one" :value="index" v-model="state.picked" />
-              <label for="one"> {{ quantity.size }} </label>
-            </div>
-          </div>
-          <div class="add-cart">
-            <select v-model="state.selectedQuantity">
-              <option
-                :key="option"
-                v-for="option in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
-                :value="option"
+          </CardLeft>
+          <CardRight>
+            <ProductName>
+              {{ productDetails.name }}
+            </ProductName>
+            <QuantityValue>
+              {{
+                state.quantities[state.picked].value * state.selectedQuantity
+              }}
+            </QuantityValue>
+            <div>size: {{ state.quantities[state.picked].size }}</div>
+            <QuantitySize>
+              <QuantityContainer
+                v-bind:key="quantity.size"
+                v-for="(quantity, index) in state.quantities"
               >
-                {{ option }}
-              </option>
-            </select>
-            <button class="add-cart-button">add to cart</button>
-          </div>
-          <router-link to="/">Go to Home</router-link>
-        </div>
-      </div>
+                <input
+                  class="radio"
+                  type="radio"
+                  id="one"
+                  :value="index"
+                  v-model="state.picked"
+                />
+                <QuantityVisible> {{ quantity.size }} </QuantityVisible>
+              </QuantityContainer>
+            </QuantitySize>
+            <AddCart>
+              <select v-model="state.selectedQuantity">
+                <option
+                  :key="option"
+                  v-for="option in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
+                  :value="option"
+                >
+                  {{ option }}
+                </option>
+              </select>
+                <AddCartButton
+                  class="add-cart-button"
+                  @click="addItemToCart"
+                >
+                  Add to cart
+                </AddCartButton>
+              <!-- <template v-if="cartState">
+                <div v-for="item in cartState.cart" :key="JSON.stringify(item)">
+                  {{ JSON.stringify(item) }}
+                </div>
+              </template> -->
+            </AddCart>
+            <router-link
+              :to="{
+                name: 'cart',
+              }"
+            >
+              Go to cart</router-link
+            >
+            <router-link
+              :to="{
+                name: 'home',
+              }"
+            >
+              Go to Home</router-link
+            >
+          </CardRight>
+        </CardContainer>
+      </Body>
     </div>
   </div>
 </template>
@@ -50,16 +89,169 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import ViewState from "./viewState";
+import styled from "vue-styled-components";
+
 import { Observer } from "mobx-vue";
+import { ProductDetailsState } from "./viewState";
+import { CartState } from "@/globalState/cartState";
+import { CurrentProductState } from "@/globalState/currentProductState";
 
+const CardContainer = styled.div`
+  border-radius: 4px;
+  border: 1px solid #e6ebf5;
+  background-color: #fff;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  color: #2d2f33;
+  display: flex;
+  justify-content: center;
+  align-items: top;
+  padding: 80px 20px 20px 20px;
+  max-width: 100%;
+  width: 1500px;
+  flex-direction: column;
+  opacity: 0.8;
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+`;
+const CardLeft = styled.div`
+  width: 50%;
+  display: flex;
+`;
+const CardRight = styled.div`
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+`;
+const MultiImages = styled.div`
+  display: flex;
+  width: 22%;
+  height: 100%;
+  flex-direction: column;
+`;
+const QuantityValue = styled.div`
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: 1.5rem;
+  font-family: BogleWeb, Helvetica Neue, Helvetica, Arial, sans-serif;
+  padding: 40px 0 40px 0;
+`;
+const QuantitySize = styled.div`
+  display: flex;
+  height: 40px;
+`;
+const QuantityContainer = styled.label`
+  display: flex;
+  height: 100%;
+  width: 100px;
+  align-items: center;
+  justify-content: center;
+  border-style: solid;
+  background-color: #ffffff;
+  border-radius: 1px;
+  border-width: 1px;
+  font: white;
+  margin-right: 6px;
+`;
+const QuantityVisible = styled.span`
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+`;
+const AddCart = styled.div`
+  display: flex;
+  height: 35px;
+  padding-top: 10px;
+`;
+const ProductName = styled.div`
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-size: 1.5rem;
+  font-family: BogleWeb, Helvetica Neue, Helvetica, Arial, sans-serif;
+`;
+const AddCartButtonContainer = styled.div`
+  height: 80%;
+  width: auto;
+  align-items: center;
+  justify-content: center;
+  background-color: #0071dc;
+  border-radius: 100px;
+`;
+const AddCartButton = styled.button`
+  display: flex;
+  height: 100%;
+  width: 125px;
+  align-items: center;
+  justify-content: center;
+  background-color: #0071dc;
+  border-radius: 100px;
+  color: white;
+  margin-left: 10px;
+  border-style: none;
+`;
 @Observer
-@Component
-export default class App extends Vue {
-  state = new ViewState();
-
-  productDetails = (this.$route as any).params;
+@Component({
+  components: {
+    CardContainer,
+    CardLeft,
+    CardRight,
+    MultiImages,
+    QuantityValue,
+    QuantitySize,
+    QuantityContainer,
+    QuantityVisible,
+    AddCart,
+    ProductName,
+    AddCartButton,
+    AddCartButtonContainer,
+  },
+})
+export default class ProductDetails extends Vue {
+  currentProductState = CurrentProductState.get();
+  productDetails = this.currentProductState.currentProduct;
+  state = new ProductDetailsState();
+  cartState = CartState.get();
+  addItemToCart(){ 
+    if (this.cartState && this.productDetails){
+      this.cartState.addItemToCart({
+        product_image_url: this.productDetails.product_image_url,
+        name: this.productDetails.name,
+        price: this.state.quantities[this.state.picked].value,
+        quantity: this.state.selectedQuantity,
+      })
+      console.log(this.cartState)
+    }
+  }              
+  
 }
+
+// const Props = Vue.extend({
+//   props: {
+//     products: Array,
+//   },
+//   components: {
+//     Tile,
+//     ProductContainer,
+//     ProductName,
+//     ImageContainer,
+//     StyledImage,
+//     FreeShipping,
+//   },
+// });
+
+// @Observer
+// @Component
+// export default class ProductTile extends Props {
+//   state = new ProductDetailsState();
+//   cartState = CartState.get();
+
+//   productDetails = (this.$route as any).params;
+// }
 </script>
 
 <style>
@@ -213,5 +405,10 @@ body {
 }
 .add-cart {
   display: flex;
+}
+.radio {
+  visibility: hidden;
+  width: 0px;
+  height: 0px;
 }
 </style>

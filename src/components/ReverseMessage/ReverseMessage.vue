@@ -9,13 +9,13 @@
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
-import ViewState from "./viewState";
 import { Observer } from "mobx-vue";
+import { ReverseMessageState } from "./viewState";
 
 @Observer
 @Component
 class App extends Vue {
-  state = new ViewState();
+  state = new ReverseMessageState();
   reverseMessage = () => {
     return this.state.input.split('').reverse().join('')
   }
